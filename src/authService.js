@@ -27,18 +27,18 @@ const AuthService = {
             .catch(console.log);
     },
 
-    // TODO να γράψω το if οπως απο πανω
     //χτυπάει το controller action του Authenticate για τον έλεγχος των στοιχείων του χρήστη
     authenticate(username, password, cb) {
         fetch(window.$baseUrl + '/Store/Authenticate/' + username + "/" + password)
             .then(res => res.json())
             .then((data) => {
+                //Αν ο server επιστρέψει κάτι, ο έλεγχος πέτυχε και επιστρέφονται το id του καταστήματος
                 if (data > 0) {
                     AuthService.storeId = data;
                     localStorage.setItem("storeId", AuthService.storeId);
                     AuthService.loginCb(AuthService.storeId);
                     cb(true);
-                } else {
+                } else { //αλλιώς απέτυχε 
                     cb(false);
                 }
             })
